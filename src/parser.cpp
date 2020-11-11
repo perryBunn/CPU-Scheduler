@@ -4,8 +4,6 @@
 using namespace perryBunn;
 using namespace std;
 
-int main() {
-    parser p;
-    p.helloWorld();
-    return 0;
+void parser::helloWorld() {
+    cout << "Hello World!" << endl;
 }
