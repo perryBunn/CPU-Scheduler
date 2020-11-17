@@ -1,7 +1,7 @@
-#include "parser.h"
 #include "process.h"
 #include <iostream>
 #include <string>
+#include <regex>
 
 using namespace std;
 
@@ -13,14 +13,18 @@ int main(int argc, char* argv[]) {
         if (arg1 == "?h") {
             cout << "help" << endl;
         }
-        cout << arg1 << endl;
+        cout << arg1 << " is not a recognized command. Use ?h for help." << endl;
     } else if (argc > 2) { // Multi argument commands.
 //        for (int i = 1; i < argc; i++) {
 //            cout << argv[i] << endl; // This line will print out the rest of the commands.
 //        }
         string arg1 = argv[1];
         string arg2 = argv[2];
-        if (true) { // Some condition for files. Possibly regex?
+
+        const std::regex base_regex("[\\S]+\\.list");
+        std::smatch base_match;
+
+        if (std::regex_search(arg1, base_match, base_regex)) { // Some condition for files. Possibly regex?
             cout << arg1 << endl;
             if (arg2 == "FCFS") {
                 cout << "FCFS" << endl;
@@ -38,9 +42,10 @@ int main(int argc, char* argv[]) {
             } else {
                 cout << arg2 << " is not a recognized task algorithm." << endl;
             }
+            cout << "finished with cmd args." << endl;
         } else {
             // No matching file pattern.
-            cout << "Something went wrong." << endl;
+            cout << "Something went wrong. Supported file type is *.list" << endl;
         }
     } else {
         // No command line args

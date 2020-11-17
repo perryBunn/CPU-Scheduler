@@ -1,14 +1,19 @@
 #ifndef CPU_SCHEDULER_PROCESS_H
 #define CPU_SCHEDULER_PROCESS_H
 #include <string>
-
+#include <chrono>
 using namespace std;
 
 class process {
     public:
         string pid;
-        int arrivalTime;
-        int burstTime;
+        chrono::system_clock::time_point start_time;
+        chrono::system_clock::time_point finish_time;
+        int arrival_time;
+        int burst_time;
+        int remaining_time;
+
+        process();
 
         process(string pidIn, int arrivalIn, int burstIn);
 
@@ -24,6 +29,5 @@ class process {
 
         void setBurstTime(int burstIn);
 };
-
 
 #endif //CPU_SCHEDULER_PROCESS_H
