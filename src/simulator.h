@@ -2,16 +2,17 @@
 #define CPU_SCHEDULER_SIMULATOR_H
 
 #include "process.h"
+#include <queue>
 
 using namespace std;
 
 class simulator {
     public:
-        process ready_queue[100];
+        queue<process> ready_queue;
 
         simulator();
 
-        void sim(process task_list[], process finish_task_list[]);
+        void sim(queue<process> task_list, queue<process> finish_task_list);
 
         void is_ready(process p);
 };
