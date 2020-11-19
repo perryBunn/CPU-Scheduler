@@ -17,6 +17,10 @@ class process {
 
         process(string pidIn, int arrivalIn, int burstIn);
 
+        process(string pidIn, string arravalIn, string burstIn);
+
+        process(int pidIn, int arrivalIn, int burstIn);
+
         string getPID();
 
         int getArrivalTime();

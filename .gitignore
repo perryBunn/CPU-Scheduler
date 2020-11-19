@@ -1,5 +1,9 @@
 out/
 .idea/
+
+ubuntu_setup_env.sh
+
+
 # Created by .ignore support plugin (hsz.mobi)
 ### C++ template
 # Prerequisites
