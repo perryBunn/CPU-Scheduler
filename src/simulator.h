@@ -12,8 +12,14 @@ class simulator {
 
         simulator();
 
-        void sim(queue<process> task_list, queue<process> finish_task_list);
+        void fcfs(queue<process> &task_list, queue<process> &finish_task_list);
+
+        void rr(queue<process> &task_list, queue<process> &finish_task_list);
+
+        void srft(queue<process> &task_list, queue<process> &finish_task_list);
 
         void is_ready(process p);
+
+        void srft_sort();
 };
 #endif //CPU_SCHEDULER_SIMULATOR_H

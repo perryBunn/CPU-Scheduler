@@ -5,6 +5,13 @@
 
 using namespace std;
 
+process::process() {
+    this->pid = "-1";
+    this->burst_time = -1;
+    this->arrival_time = -1;
+    this->remaining_time = this->burst_time;
+};
+
 process::process(int PIDIn, int arrivalIn, int burstIn) {
     this->pid = to_string(PIDIn);
     this->arrival_time = arrivalIn;

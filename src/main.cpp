@@ -33,10 +33,24 @@ int main(int argc, char* argv[]) {
             if (arg2 == "FCFS") {
                 cout << "FCFS" << endl;
                 parser p;
-                queue<process> task_list = p.readInputFile(arg1);
+                queue<process> task_list;
                 queue<process> final_task_list;
+                task_list = p.readInputFile(arg1);
+
+                cout << "##### task list check #####" << endl;
+                cout << "task list size: " << task_list.size() << endl;
+                int list_size = task_list.size();
+                queue<process> task_list_copy = task_list;
+                for (int i = 0; i < list_size; i++) {
+                    cout << task_list_copy.front().pid << " " << task_list_copy.front().arrival_time << " " << task_list_copy.front().burst_time << endl;
+                    task_list_copy.pop();
+                }
+                cout << &task_list << endl;
+                cout << &final_task_list << endl;
+                cout << "##### end task list check #####" << endl;
+
                 simulator sim;
-                sim.sim(task_list, final_task_list);
+                sim.fcfs(task_list, final_task_list);
             } else if  (arg2 == "RR") {
                 cout << "RR" << endl;
                 if (argc > 3) { // If argc is larger that 3, continue.
@@ -48,6 +62,25 @@ int main(int argc, char* argv[]) {
                 }
             } else if (arg2 == "SRTF") {
                 cout << "SRTF" << endl;
+                parser p;
+                queue<process> task_list;
+                queue<process> final_task_list;
+                task_list = p.readInputFile(arg1);
+
+                cout << "##### task list check #####" << endl;
+                cout << "task list size: " << task_list.size() << endl;
+                int list_size = task_list.size();
+                queue<process> task_list_copy = task_list;
+                for (int i = 0; i < list_size; i++) {
+                    cout << task_list_copy.front().pid << " " << task_list_copy.front().arrival_time << " " << task_list_copy.front().burst_time << endl;
+                    task_list_copy.pop();
+                }
+                cout << &task_list << endl;
+                cout << &final_task_list << endl;
+                cout << "##### end task list check #####" << endl;
+
+                simulator sim;
+                sim.srft(task_list, final_task_list);
             } else {
                 cout << arg2 << " is not a recognized task algorithm." << endl;
             }
