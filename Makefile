@@ -1,8 +1,8 @@
 VPATH = src
 DESDIR = out
 
-all: main.o parser.o simulator.o process.o
-	g++ $(DESDIR)/main.o $(DESDIR)/parser.o $(DESDIR)/simulator.o $(DESDIR)/process.o -o $(DESDIR)/output
+all: main.o parser.o simulator.o process.o stats.o
+	g++ $(DESDIR)/main.o $(DESDIR)/parser.o $(DESDIR)/simulator.o $(DESDIR)/process.o $(DESDIR)/stats.o -o $(DESDIR)/output
 
 main.o: main.cpp
 	g++ -c $(VPATH)/main.cpp -o $(DESDIR)/$@
@@ -15,6 +15,9 @@ parser.o: parser.cpp parser.h
 
 simulator.o: simulator.cpp simulator.h
 	g++ -c $(VPATH)/simulator.cpp -o $(DESDIR)/$@
+
+stats.o: stats.cpp stats.h
+	g++ -c $(VPATH)/stats.cpp -o $(DESDIR)/$@
 
 clean:
 	rm $(DESDIR)/*.o

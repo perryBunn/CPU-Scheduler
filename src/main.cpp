@@ -5,12 +5,21 @@
 #include <string>
 #include <regex>
 #include <queue>
+#include "stdio.h"
+#include "stats.h"
 
 using namespace std;
 
+void PressEnterToContinue()
+{
+    int c;
+    printf( "Press ENTER to continue... " );
+    fflush( stdout );
+    do c = getchar(); while ((c != '\n') && (c != EOF));
+}
 
 int main(int argc, char* argv[]) {
-    cout << "ARGC: " << argc << endl;
+    //cout << "ARGC: " << argc << endl;
     if (argc <= 2 || argc > 4) { // Single argument commands or to many arguments.
         string arg1 = argv[1];
         if (arg1 == "?h") {
@@ -19,9 +28,6 @@ int main(int argc, char* argv[]) {
             cout << arg1 << " is not a recognized command. Use ?h for help." << endl;
         }
     } else if (argc > 2) { // Multi argument commands.
-//        for (int i = 1; i < argc; i++) {
-//            cout << argv[i] << endl; // This line will print out the rest of the commands.
-//        }
         string arg1 = argv[1];
         string arg2 = argv[2];
 
@@ -29,7 +35,7 @@ int main(int argc, char* argv[]) {
         std::smatch base_match;
 
         if (std::regex_search(arg1, base_match, base_regex)) { // Some condition for files. Possibly regex?
-            cout << arg1 << endl;
+            //cout << arg1 << endl;
             if (arg2 == "FCFS") {
                 cout << "FCFS" << endl;
                 parser p;
@@ -37,7 +43,8 @@ int main(int argc, char* argv[]) {
                 queue<process> final_task_list;
                 task_list = p.readInputFile(arg1);
 
-                cout << "##### task list check #####" << endl;
+                //cout << "##### task list check #####" << endl;
+                /*
                 cout << "task list size: " << task_list.size() << endl;
                 int list_size = task_list.size();
                 queue<process> task_list_copy = task_list;
@@ -46,13 +53,21 @@ int main(int argc, char* argv[]) {
                     task_list_copy.pop();
                 }
                 cout << &task_list << endl;
-                cout << &final_task_list << endl;
-                cout << "##### end task list check #####" << endl;
+                cout << &finish_task_list << endl;
+                */
+                //cout << "##### end task list check #####" << endl;
 
+                cout << "Scheduling Policy: " << arg2 << endl;
+                cout << "There are " << task_list.size() << " task loaded from \"" << arg1 << "\".";
+                PressEnterToContinue();
+                cout << "==================================================================" << endl;
                 simulator sim;
                 sim.fcfs(task_list, final_task_list);
+                cout << "==================================================================" << endl;
+                stats stat;
+                stat.calculate(final_task_list);
             } else if  (arg2 == "RR") {
-                cout << "RR" << endl;
+                //cout << "RR" << endl;
                 if (argc > 3) { // If argc is larger that 3, continue.
                     int quantum_time = stoi(argv[3]);
                     parser p;
@@ -60,8 +75,29 @@ int main(int argc, char* argv[]) {
                     queue<process> final_task_list;
                     task_list = p.readInputFile(arg1);
 
+                    //cout << "##### task list check #####" << endl;
+                    /*
+                    cout << "task list size: " << task_list.size() << endl;
+                    int list_size = task_list.size();
+                    queue<process> task_list_copy = task_list;
+                    for (int i = 0; i < list_size; i++) {
+                        cout << task_list_copy.front().pid << " " << task_list_copy.front().arrival_time << " " << task_list_copy.front().burst_time << endl;
+                        task_list_copy.pop();
+                    }
+                    cout << &task_list << endl;
+                    cout << &finish_task_list << endl;
+                    */
+                    //cout << "##### end task list check #####" << endl;
+
+                    cout << "Scheduling Policy: " << arg2 << endl;
+                    cout << "There are " << task_list.size() << " task loaded from \"" << arg1 << "\".";
+                    PressEnterToContinue();
+                    cout << "==================================================================" << endl;
                     simulator sim;
                     sim.rr(task_list, final_task_list, quantum_time);
+                    cout << "==================================================================" << endl;
+                    stats stat;
+                    stat.calculate(final_task_list);
                 } else {
                     // help for RR. Not enough arguments.
                     cout << "RR requires additional arguments." << endl;
@@ -73,7 +109,8 @@ int main(int argc, char* argv[]) {
                 queue<process> final_task_list;
                 task_list = p.readInputFile(arg1);
 
-                cout << "##### task list check #####" << endl;
+                //cout << "##### task list check #####" << endl;
+                /*
                 cout << "task list size: " << task_list.size() << endl;
                 int list_size = task_list.size();
                 queue<process> task_list_copy = task_list;
@@ -82,11 +119,19 @@ int main(int argc, char* argv[]) {
                     task_list_copy.pop();
                 }
                 cout << &task_list << endl;
-                cout << &final_task_list << endl;
-                cout << "##### end task list check #####" << endl;
+                cout << &finish_task_list << endl;
+                */
+                //cout << "##### end task list check #####" << endl;
 
+                cout << "Scheduling Policy: " << arg2 << endl;
+                cout << "There are " << task_list.size() << " task loaded from \"" << arg1 << "\".";
+                PressEnterToContinue();
+                cout << "==================================================================" << endl;
                 simulator sim;
                 sim.srft(task_list, final_task_list);
+                cout << "==================================================================" << endl;
+                stats stat;
+                stat.calculate(final_task_list);
             } else {
                 cout << arg2 << " is not a recognized task algorithm." << endl;
             }
@@ -101,3 +146,4 @@ int main(int argc, char* argv[]) {
     }
     return 0;
 }
+
