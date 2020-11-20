@@ -54,8 +54,14 @@ int main(int argc, char* argv[]) {
             } else if  (arg2 == "RR") {
                 cout << "RR" << endl;
                 if (argc > 3) { // If argc is larger that 3, continue.
-                    string arg3 = argv[3];
-                    cout << arg3 << endl;
+                    int quantum_time = stoi(argv[3]);
+                    parser p;
+                    queue<process> task_list;
+                    queue<process> final_task_list;
+                    task_list = p.readInputFile(arg1);
+
+                    simulator sim;
+                    sim.rr(task_list, final_task_list, quantum_time);
                 } else {
                     // help for RR. Not enough arguments.
                     cout << "RR requires additional arguments." << endl;

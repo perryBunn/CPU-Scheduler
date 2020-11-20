@@ -14,11 +14,9 @@ class simulator {
 
         void fcfs(queue<process> &task_list, queue<process> &finish_task_list);
 
-        void rr(queue<process> &task_list, queue<process> &finish_task_list);
+        void rr(queue<process> &task_list, queue<process> &finish_task_list, int quantum_time);
 
         void srft(queue<process> &task_list, queue<process> &finish_task_list);
-
-        void is_ready(process p);
 
         void srft_sort();
 

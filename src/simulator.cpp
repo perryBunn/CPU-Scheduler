@@ -175,3 +175,71 @@ void simulator::srft_sort() {
         this->ready_queue.push(temp[i]);
     }
 }
+
+void simulator::rr(queue <process> &task_list, queue <process> &finish_task_list, int quantum_time) {
+    cout << "sim" << endl;
+
+    //cout << "##### task list check #####" << endl;
+    /*
+    cout << "task list size: " << task_list.size() << endl;
+    int list_size = task_list.size();
+    queue<process> task_list_copy = task_list;
+    for (int i = 0; i < list_size; i++) {
+        cout << task_list_copy.front().pid << " " << task_list_copy.front().arrival_time << " " << task_list_copy.front().burst_time << endl;
+        task_list_copy.pop();
+    }
+    cout << &task_list << endl;
+    cout << &finish_task_list << endl;
+    */
+    //cout << "##### end task list check #####" << endl;
+
+
+    int time = 0;
+    process active_task = this->ready_queue.front(); // this sets it to a garbage object, doesnt matter because it will be overwritten.
+    while (!task_list.empty() or !this->ready_queue.empty()) {
+        cout << "#### RR round ####" << endl;
+        cout << "current time: " << time << endl;
+        cout << "task_list head arrival time: " << task_list.front().arrival_time << endl;
+        if (!task_list.empty()) {
+            while (task_list.front().arrival_time <= time) { // While there is a task that has arrived add it to the ready_queue
+                cout << "task_list size: " << task_list.size() << " ";
+                this->ready_queue.push(task_list.front());
+                task_list.pop();
+                if (task_list.empty()) { // if there is nothing left then end.
+                    break;
+                } else {
+                    cout << "task_list head arrival time: " << task_list.front().arrival_time << endl;
+                }
+            }
+        }
+        if (time == 0) {
+            active_task = this->ready_queue.front();
+        }
+        int active_process_size = this->ready_queue.size();
+        cout << "process size: " << active_process_size << endl;
+        for (int i = 0; i < active_process_size; i++) { // round robin
+            for (int j = 0; j < quantum_time; j++) { // process iteration #'s per RR round
+                if (active_task.remaining_time == 0) { // if process is completed
+                    active_task.finish_time = chrono::system_clock::now();
+                    cout << "<time " << time << "> " << active_task.pid << " is finished..." << endl;
+                    this->ready_queue.pop();
+                    finish_task_list.push(active_task);
+                    if (task_list.empty() and this->ready_queue.empty()) { // if there is nothing left then end.
+                        break;
+                    }
+                    active_task = this->ready_queue.front();
+                }
+                if (active_task.remaining_time == active_task.burst_time) { // set start time
+                    active_task.start_time = chrono::system_clock::now();
+                }
+                cout << "<time " << time << "> " << active_task.pid << " is running" << endl;
+                active_task.remaining_time--;
+                time++;
+            }
+            // TODO: Once the active process finishes its allotted time move process to back of queue and assign new active.
+            cout << "A new process would be assigned here." << endl;
+        }
+        cout << "#### end RR round ####" << endl;
+    }
+    cout << "exit sim" << endl;
+}
