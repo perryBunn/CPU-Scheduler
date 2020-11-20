@@ -60,8 +60,8 @@ int main(int argc, char* argv[]) {
                     // help for RR. Not enough arguments.
                     cout << "RR requires additional arguments." << endl;
                 }
-            } else if (arg2 == "SRTF") {
-                cout << "SRTF" << endl;
+            } else if (arg2 == "SRFT") {
+                cout << "SRFT" << endl;
                 parser p;
                 queue<process> task_list;
                 queue<process> final_task_list;

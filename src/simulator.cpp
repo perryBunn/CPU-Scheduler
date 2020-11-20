@@ -6,12 +6,10 @@
 
 using namespace std;
 
-simulator::simulator() {
-}
+simulator::simulator() = default;
 
 void simulator::fcfs(queue<process> &task_list, queue<process> &finish_task_list) {
     cout << "sim" << endl;
-
 
     cout << "##### task list check #####" << endl;
     cout << "task list size: " << task_list.size() << endl;
@@ -24,7 +22,6 @@ void simulator::fcfs(queue<process> &task_list, queue<process> &finish_task_list
     cout << &task_list << endl;
     cout << &finish_task_list << endl;
     cout << "##### end task list check #####" << endl;
-
 
     int time = 0;
     process active_task = this->ready_queue.front();
@@ -105,16 +102,15 @@ void simulator::srft(queue <process> &task_list, queue <process> &finish_task_li
         if (active_task.remaining_time == 0) {
             active_task.finish_time = chrono::system_clock::now();
             cout << "<time " << time << "> " << active_task.pid << " is finished..." << endl;
-            //TODO: This is popping the head of the list but the head is not always the active task.
-            this->ready_queue.pop();
+            this->pop_active_process(active_task);
             finish_task_list.push(active_task);
             if (task_list.empty() and this->ready_queue.empty()) {
                 break;
             }
             active_task = this->ready_queue.front();
-            if (active_task.remaining_time == active_task.burst_time) {
-                active_task.start_time = chrono::system_clock::now(); /* run active_task */
-            }
+        }
+        if (active_task.remaining_time == active_task.burst_time) {
+            active_task.start_time = chrono::system_clock::now(); /* run active_task */
         }
         cout << "<time " << time << "> " << active_task.pid << " is running" << endl;
         active_task.remaining_time--; /* check if active_task finishes or not */
@@ -122,6 +118,35 @@ void simulator::srft(queue <process> &task_list, queue <process> &finish_task_li
         //break;
     }
     cout << "end sim" << endl;
+}
+
+void simulator::pop_active_process(process &active){
+    queue<process> temp = this->ready_queue;
+    int list_size = this->ready_queue.size();
+
+    // clear ready_queue
+    for (int i = 0; i < list_size; i++) {
+        //cout << ready_queue.front().pid << endl;
+        this->ready_queue.pop();
+    }
+    //cout << "----" << endl;
+    // readd ready queue without active
+    for (int i = 0; i < list_size; i++) {
+        if (!(temp.front().equals(active))) {
+            //cout << "### info ###" << endl;
+            //cout << temp.front().pid << active.pid << endl;
+            this->ready_queue.push(temp.front());
+            //cout << temp.front().pid << endl;
+        }
+        temp.pop();
+    }
+    // check
+//    cout << "### check" << endl;
+//    queue<process> temp2 = this->ready_queue;
+//    for (int i = 0; i < list_size; i++) {
+//        cout << temp2.front().pid << endl;
+//        temp2.pop();
+//    }
 }
 
 void simulator::srft_sort() {
@@ -144,9 +169,9 @@ void simulator::srft_sort() {
         }
     }
     // place in ready_queue
-    cout << "print ready_queue" << endl;
+    //cout << "print ready_queue" << endl;
     for (int i = 0; i < list_size; ++i) {
-        cout << "pid: " << temp[i].pid << " burst: " << temp[i].burst_time << endl;
+        //cout << "pid: " << temp[i].pid << " burst: " << temp[i].burst_time << endl;
         this->ready_queue.push(temp[i]);
     }
 }

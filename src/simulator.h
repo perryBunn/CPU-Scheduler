@@ -21,5 +21,7 @@ class simulator {
         void is_ready(process p);
 
         void srft_sort();
+
+        void pop_active_process(process &active);
 };
 #endif //CPU_SCHEDULER_SIMULATOR_H

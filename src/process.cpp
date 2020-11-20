@@ -56,3 +56,10 @@ int process::getBurstTime() {
 void process::setBurstTime(int burstIn) {
     this->burst_time = burstIn;
 }
+
+bool process::equals(process &process) {
+    if (this->pid == process.pid) {
+        return true;
+    }
+    return false;
+}

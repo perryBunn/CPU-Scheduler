@@ -1,7 +1,7 @@
 VPATH = src
 DESDIR = out
 
-output: main.o parser.o simulator.o process.o
+all: main.o parser.o simulator.o process.o
 	g++ $(DESDIR)/main.o $(DESDIR)/parser.o $(DESDIR)/simulator.o $(DESDIR)/process.o -o $(DESDIR)/output
 
 main.o: main.cpp

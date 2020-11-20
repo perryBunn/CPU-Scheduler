@@ -32,6 +32,8 @@ class process {
         void setArrivalTime(int arrivalIn);
 
         void setBurstTime(int burstIn);
+
+        bool equals(process &process);
 };
 
 #endif //CPU_SCHEDULER_PROCESS_H
