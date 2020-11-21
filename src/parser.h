@@ -13,6 +13,9 @@ class parser {
 
         queue<process> readInputFile(string file);
 
+    private:
+        queue<process> sort(queue<process> task_list);
+
 };
 
 #endif //CPU_SCHEDULER_PARSER_H

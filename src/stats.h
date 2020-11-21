@@ -6,14 +6,9 @@
 
 class stats {
     public:
-        float avgWaitingTime;
-        float avgResponceTime;
-        float avgTurnAround;
-        float cpuUsage;
-
         stats();
 
-        void calculate(queue<process> finished_task_list);
+        void calculate(queue<process> finished_task_list, int total_time);
 };
 
 

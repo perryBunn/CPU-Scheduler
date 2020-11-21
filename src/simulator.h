@@ -9,6 +9,7 @@ using namespace std;
 class simulator {
     public:
         queue<process> ready_queue;
+        int time;
 
         simulator();
 
